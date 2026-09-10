@@ -1,0 +1,28 @@
+name: Pipeline de Testes
+
+# 1. Quando o pipeline vai rodar?
+on:
+  push:
+    branches: [ main ]  # Dispara sempre que houver atualização na branch main
+
+# 2. O que o pipeline vai fazer?
+jobs:
+  executar-testes:
+    runs-on: ubuntu-latest  # Cria uma máquina virtual Linux temporária na nuvem
+    
+    steps:
+      # Passo A: Copia o código do seu repositório para dentro da máquina virtual
+      - name: Baixar código fonte
+        uses: actions/checkout@v4
+
+      # Passo B: Instala o ambiente (Node.js neste exemplo)
+      - name: Instalar o Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Passo C: Instala as dependências e roda os testes do seu projeto
+      - name: Instalar dependências e testar
+        run: |
+          npm install
+          npm test
